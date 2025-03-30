@@ -6,6 +6,8 @@ from gymnasium.envs.classic_control import CartPoleEnv as CartPoleEnvOriginal
 from gymnasium.envs.registration import EnvSpec
 from typing import Optional
 
+import torch
+
 class logger ():
 
     def __init__ ():
@@ -13,6 +15,10 @@ class logger ():
     def warn(message):
 
         print(message)
+
+#load torch model 
+model = torch.load('env_model/my_model_full.pth' , weights_only=False)
+model.eval()
 
 def neuralnet_dummy(s,a):
     '''
@@ -30,10 +36,37 @@ def neuralnet_dummy(s,a):
     #state = [sprime * 1.1 for sprime in s]
      
     #state = tuple(state)
+
+
     
-    return s
+    
+
+    #mock input 
+    input_list = np.append(s,a)
+    
+    input_tensor = torch.tensor(input_list).float()
+    state_and_action = input_tensor
+    #state_and_action = torch.tensor([0.,0.,0.,0.,0])
+    dummy_input= state_and_action.unsqueeze(0)
+    '''
+    model = torch.load('env_model/my_model_full.pth', weights_only=False)
+    dummy_input = outputs_array[0,:5].copy()
+    dummy_input = torch.from_numpy(dummy_input).float()
+    dummy_input = dummy_input.unsqueeze(0)  # add batch dimension
+    results = model(dummy_input)
+    '''
+
+
+    with torch.no_grad():
+        output = model(dummy_input)
+    
+    
+    
+    
+    return output.numpy()[0]
     #return s
-    
+
+
 
 
 class CartPoleEnv(CartPoleEnvOriginal):
