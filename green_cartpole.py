@@ -41,7 +41,7 @@ def neuralnet_output(s,a):
     input_tensor = torch.tensor(input_list).float()
     state_and_action = input_tensor
     #state_and_action = torch.tensor([0.,0.,0.,0.,0])
-    dummy_input= state_and_action.unsqueeze(0)
+    input= state_and_action.unsqueeze(0)
     '''
     model = torch.load('env_model/my_model_full.pth', weights_only=False)
     dummy_input = outputs_array[0,:5].copy()
@@ -51,7 +51,7 @@ def neuralnet_output(s,a):
     '''
 
     with torch.no_grad():
-        output = model(dummy_input)
+        output = model(input)
     
     return output.numpy()[0]
     #return s
