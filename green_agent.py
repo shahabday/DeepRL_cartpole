@@ -7,12 +7,10 @@ from ray.rllib.algorithms.dqn import DQNConfig
 from ray.tune.registry import register_env
 from green_cartpole import GreenCartPoleEnv
 from gymnasium.wrappers import TimeLimit
+
 # register our costum envirnoment 
 def env_creator(config):
-
     #wrapp it in timelimit 
-
-
     return TimeLimit(GreenCartPoleEnv(config)  , max_episode_steps=200) # Return a gymnasium.Env instance.
 register_env("green_env", env_creator)
 
@@ -44,7 +42,7 @@ agent = config.build()
 # print(reports)
 
 # 3 - Run a loop for nr_trainings = 50 times
-nr_trainings = 100  # pylint: disable=invalid-name
+nr_trainings = 20  # pylint: disable=invalid-name
 mean_rewards = []
 for _ in range(nr_trainings):
     agent.train()
@@ -63,7 +61,7 @@ plt.close()
 # 4 - Visualize the trained agent; This is similar to running the random_agent,
 # except that this time we have a trained agent
 # 4.1 - Create an environment similar to the training env.
-env = gym.make("green_env", render_mode="rgb_array")
+env = gym.make("CartPole-v1", render_mode="rgb_array")
 s, _ = env.reset()
 done = False  # pylint: disable=invalid-name
 cumulative_reward = 0  # pylint: disable=invalid-name
