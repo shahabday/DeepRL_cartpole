@@ -21,3 +21,9 @@ by
 ```buildoutcfg
 pip install -r requirements.txt
 ```
+
+## Envirnoment modelling 
+
+this part was done by another group , 
+the envirnoment modelling can be found in the following repository : 
+https://github.com/DavidePanza/RL_project
