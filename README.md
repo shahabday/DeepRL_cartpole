@@ -1,8 +1,8 @@
 # DeepRL_cartpole
-Deep Nueral Network Reinforcement Learning for cartpole envirnoment 
+Deep Neural Network Reinforcement Learning for cartpole environment 
 
 
-We will use the following envirnoment 
+We will use the following environment 
 
 
 ## Requirements
@@ -22,8 +22,8 @@ by
 pip install -r requirements.txt
 ```
 
-## Envirnoment modelling 
+## Environment modelling 
 
 this part was done by another group , 
-the envirnoment modelling can be found in the following repository : 
+the environment modelling can be found in the following repository: 
 https://github.com/DavidePanza/RL_project
