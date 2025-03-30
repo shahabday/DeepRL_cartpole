@@ -1,30 +1,23 @@
-import gym
-from gym import Env
-from gym.spaces import Discrete, Box
-import numpy as np
+from green_cartpole import GreenCartPoleEnv
+import random
 
-class CustomCartPoleEnv(Env):
-    def __init__(self):
-        super(CustomCartPoleEnv, self).__init__()
-        # Create the original CartPole environment
-        #self.env = gym.make('CartPole-v1')
+from gymnasium.wrappers import TimeLimit
 
-        # Define action and observation space based on the wrapped env
-        self.action_space = self.env.action_space
-        self.observation_space = self.env.observation_space
 
-    def step(self, action):
-        # Use the wrapped env's step
-        obs, reward, done, info = self.env.step(action)
-        
-        # You can modify the reward or observation here if needed
-        return obs, reward, done, info
+envirnoment = TimeLimit(GreenCartPoleEnv(render_mode='human'),max_episode_steps=200)
+envirnoment.reset()
 
-    def reset(self):
-        return self.env.reset()
+for count in range(10000):
+    print(count)
+    step = random.randint(0,1)
+    state, reward , terminated , truncated , info = envirnoment.step(step)
+    if truncated :
+        print(count)
+        print( 'truncated ')
+        break
+    elif terminated :
+        print(count)
+        print ('terminated ')
+        break
 
-    def render(self, mode="human"):
-        self.env.render()
-
-    def close(self):
-        self.env.close()
+print('end')

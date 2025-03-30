@@ -26,8 +26,13 @@ def neuralnet_dummy(s,a):
     | 3   | Pole Angular Velocity | -Inf                | Inf               |
 
     '''
-
-    sprime = [sprime * random.random() for sprime in s]
+    #state = [sprime * np.random.normal(1,0.1) for sprime in s]
+    #state = [sprime * 1.1 for sprime in s]
+     
+    #state = tuple(state)
+    
+    return s
+    #return s
     
 
 
@@ -47,32 +52,18 @@ class CartPoleEnv(CartPoleEnvOriginal):
         return self._spec
 
 
-class POCartPoleEnv(CartPoleEnv):  # pylint: disable=invalid-name   
+class GreenCartPoleEnv(CartPoleEnv):  # pylint: disable=invalid-name   
     """A partial observable environment for the CartPole problem, where angular and posiional
     velocity are not observable. The state of the environment is the position of the cart and the
     angle.
     """
-
-    def __init__(self, render_mode):
-        """Instantiate the environment using the parent class constructor and then modify the
-        observation space to only include the observable part of the state.
-        """
-        super().__init__(render_mode=render_mode)
-        high = np.array(
-            [
-                self.x_threshold * 2,
-                self.theta_threshold_radians * 2,
-            ],
-            dtype=np.float32,
-        )
-        self.observation_space = spaces.Box(-high, high, dtype=np.float32)
 
     def step(self, action):
         assert self.action_space.contains(
             action
         ), f"{action!r} ({type(action)}) invalid"
         assert self.state is not None, "Call reset before using step method."
-        x, x_dot, theta, theta_dot = self.state
+        
         
         ####### replace from here ###########
         """
@@ -109,7 +100,7 @@ class POCartPoleEnv(CartPoleEnv):  # pylint: disable=invalid-name
 
         self.state = neuralnet_dummy(self.state, action)
 
-        
+        x, x_dot, theta, theta_dot = self.state
 
 
         # stays the same : 
