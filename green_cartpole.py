@@ -20,7 +20,7 @@ class logger ():
 model = torch.load('env_model/my_model_full.pth' , weights_only=False)
 model.eval()
 
-def neuralnet_dummy(s,a):
+def neuralnet_output(s,a):
     '''
     dummy neural network that just multiplies every element in s by
     a random number between 0 and 1, ignoring a
@@ -34,12 +34,6 @@ def neuralnet_dummy(s,a):
     '''
     #state = [sprime * np.random.normal(1,0.1) for sprime in s]
     #state = [sprime * 1.1 for sprime in s]
-     
-    #state = tuple(state)
-
-
-    
-    
 
     #mock input 
     input_list = np.append(s,a)
@@ -56,12 +50,8 @@ def neuralnet_dummy(s,a):
     results = model(dummy_input)
     '''
 
-
     with torch.no_grad():
         output = model(dummy_input)
-    
-    
-    
     
     return output.numpy()[0]
     #return s
@@ -131,7 +121,7 @@ class GreenCartPoleEnv(CartPoleEnv):  # pylint: disable=invalid-name
 
         # implement randomizer in the physics upper and lower bounds: 
 
-        self.state = neuralnet_dummy(self.state, action)
+        self.state = neuralnet_output(self.state, action)
 
         x, x_dot, theta, theta_dot = self.state
 
