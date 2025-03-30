@@ -36,7 +36,7 @@ def neuralnet_output(s,a):
     #state = [sprime * 1.1 for sprime in s]
 
     #mock input 
-    input_list = np.append(s,a)
+    input_list = np.append(a,s)
     
     input_tensor = torch.tensor(input_list).float()
     state_and_action = input_tensor
